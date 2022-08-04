@@ -107,6 +107,36 @@ test('bounds for float zooms', function(t) {
     t.end();
 });
 
+test('bounds coordinate sets are valid for small canvas dimensions', function (t) {
+    var bounds = viewport.bounds([-98.5556199, 39.8097343], 3, [640, 480], 512);
+    var xMin = bounds[0];
+    var yMin = bounds[1];
+    var xMax = bounds[2];
+    var yMax = bounds[3];
+
+    console.log(bounds)
+    t.equal(xMin >= -180, true);
+    t.equal(yMin >= -90, true);
+    t.equal(xMax <= 180, true);
+    t.equal(yMax <= 90, true);
+    t.end();
+});
+
+
+test('bounds coordinate sets are valid for large canvas X dimension', function (t) {
+    var bounds = viewport.bounds([-98.5556199, 39.8097343], 3, [2892, 480], 512);
+    var xMin = bounds[0];
+    var yMin = bounds[1];
+    var xMax = bounds[2];
+    var yMax = bounds[3];
+
+    t.equal(xMin >= -180, true);
+    t.equal(yMin >= -90, true);
+    t.equal(xMax <= 180, true);
+    t.equal(yMax <= 90, true);
+    t.end();
+});
+
 test('viewport for float zooms', function(t) {
     t.ok(areViewportsApproximatelyEqual(
         viewport.viewport(sampleBounds, [10, 10], undefined, undefined, 256, true),
